@@ -1,0 +1,16 @@
+challenge name: Free WIFI
+
+des:
+
+we want to find the password of the wifi from give ".cap" file
+
+solution:
+
+There are many tools to solve this ,I used aricrack-ng
+
+```$aircrack-ng -w rockyou.txt hack1.cap-01.cap```
+
+by doing this command  you will get the flag
+
+ 
+ 
