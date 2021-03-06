@@ -45,6 +45,7 @@ level-7:
 --------
 
 password: 7z3hEENjQtflzgnT29q7wAvMNfZdh0i9 
+
 solution: here we want to pass the correct secret,by looing into the "view sourcecode" we can see the php source-code and in that it is including ``includes/secret.inc`` to the page so i browsed to that page and in the source of the page we can find the secret
 	
 level-8:
