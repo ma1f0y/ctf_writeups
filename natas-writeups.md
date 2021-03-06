@@ -66,8 +66,12 @@ level-10:
 
 password: nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu
 
-solution: by looking through the php sourcecode we can see that our input is passed into passthru() finction which will exicute the grep command ,so we can have os command injection vulnerablity here and just by putting ``;`` after that what commant we give will be exicuted on the server 
-payload: ; cat /../../../etc/natas_webpass/natas10
+solution: by looking through the php sourcecode we can see that our input is passed into passthru() finction which will exicute the grep command ,so we can have os command injection vulnerablity here and just by putting ``;`` after that what commant we give will be exicuted on the server
+
+payload: 
+```bash
+; cat /../../../etc/natas_webpass/natas10
+```
 	
 level-11:
 -------
@@ -75,7 +79,8 @@ level-11:
 password:  U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK
 
 solution: here there are some fileter so we cannot directly inject commands,so we can use the grep command to show all the text in ``/../../../etc/natas_webpass/natas10`` file
-payload: .* ../../../../etc/natas_webpass/natas11
+
+payload: ``.* ../../../../etc/natas_webpass/natas11``
 
 level-12:
 -------
