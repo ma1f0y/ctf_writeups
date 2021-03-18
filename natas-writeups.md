@@ -270,7 +270,61 @@ for i in range(1,640):
         
 
 ```
-	
+
+level-20
+---------
+
+In this challenge we have to be admin to get the password for next leve ,it is check the session variable 'admin' equal to 1 ,the session ,from the source code we can see that the session variables are store into a file that is taken form our input ,and the session varible are read form that file itself line by line ,each line will be set as a new session variable 
+```php
+function myread($sid) { 
+    debug("MYREAD $sid"); 
+    if(strspn($sid, "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-") != strlen($sid)) {
+    debug("Invalid SID"); 
+        return "";
+    }
+    $filename = session_save_path() . "/" . "mysess_" . $sid;
+    if(!file_exists($filename)) {
+        debug("Session file doesn't exist");
+        return "";
+    }
+    debug("Reading from ". $filename);
+    $data = file_get_contents($filename);
+    $_SESSION = array();
+    foreach(explode("\n", $data) as $line) {
+        debug("Read [$line]");
+    $parts = explode(" ", $line, 2);
+    if($parts[0] != "") $_SESSION[$parts[0]] = $parts[1];
+    }
+    return session_encode();
+}
+
+function mywrite($sid, $data) { 
+    // $data contains the serialized version of $_SESSION
+    // but our encoding is better
+    debug("MYWRITE $sid $data"); 
+    // make sure the sid is alnum only!!
+    if(strspn($sid, "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-") != strlen($sid)) {
+    debug("Invalid SID"); 
+        return;
+    }
+    $filename = session_save_path() . "/" . "mysess_" . $sid;
+    $data = "";
+    debug("Saving in ". $filename);
+    ksort($_SESSION);
+    foreach($_SESSION as $key => $value) {
+        debug("$key => $value");
+        $data .= "$key $value\n";
+    }
+    file_put_contents($filename, $data);
+    chmod($filename, 0600);
+} 
+```
+
+we can add a new line to that file like admin and value to be 1 so when it reads that file the admin session variable will be set
+
+payload:``admin%OAadmin 1``
+
+password : **IFekPyrQXftziDEsUr3x21sYuahypdgJ**
 	
 	
 	
