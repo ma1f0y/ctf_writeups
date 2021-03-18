@@ -372,6 +372,49 @@ payload :``align=center&fontsize=100%25&admin=1&bgcolor=yellow&submit=Update``
 
 
 password :**chG9fbe1Tq2eWVMgjYYD1MsfIvN461kJ**
+
+level-22
+---------
+
+
+sent a request with the  revelio as get parametr we can use burp to see the response 
+``natas22.natas.labs.overthewire.org/?revelio=qwerqwe``
+password : **D0vlad33nQF0Hz2EP255TP5wSW9ZsRSE**
+
+level-23
+---------
+
+from the source , we have to pass something with``iloveyou`` in the input fied and it should be greater that 10 also
+
+form the php manul we cna see that it if number in the begining of a string is valid then its value will be take as that number or  else 0 so i put 11 in fort as it is greater than 10
+
+payload ``11iloveyou``
+
+password :**OsRmXFguozKpTZZ5X14zNO43379LZveg**
+
+
+level-24
+--------
+From the source of the page we can see that our input is sompared with anothersrting using ``strcmp()`` if the return value of strcmp() is to be 0 only then we will get the password 
+```php
+<?php
+    if(array_key_exists("passwd",$_REQUEST)){
+        if(!strcmp($_REQUEST["passwd"],"<censored>")){
+            echo "<br>The credentials for the next level are:<br>";
+            echo "<pre>Username: natas25 Password: <censored></pre>";
+        }
+        else{
+            echo "<br>Wrong!<br>";
+        }
+    }
+    // morla / 10111
+?>  
+```
+so it we pass the an array to  strcmp() it will return '0' ,therefor we can pass the password parameter as an array
+paylod :http://natas24.natas.labs.overthewire.org/?passwd[]=00000
+
+password **GHF6X7YwACaYYssHVY05cFq83hRktl4c**
+
 	
 	
 	
