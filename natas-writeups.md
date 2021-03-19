@@ -428,7 +428,7 @@ level-25
     }
 ```
 
-In the web app it is fection the langguage file when we change the language, so we can try path travesal attack
+In the web app it is fecting the language file when we change the language, so we can try path travesal attack
 ```php
 function safeinclude($filename){
         // check for directory traversal
@@ -469,10 +469,12 @@ so we cat try to acess that file (the the file name is natas25_(OURSESSIONID).lo
 ```http://natas25.natas.labs.overthewire.org/?lang=..././logs/natas25_SESSIONID.log```
 
 we will get the response
+
 ![image](https://user-images.githubusercontent.com/61080375/111745412-8ad98700-88b2-11eb-928c-b192e9423363.png)
 
-so here we can acces that file,now we can try changing the ``user-agent`` header to something else as it is  showing in that response,we can use burp for that 
+so here we can acces that file,now we can try changing the ``user-agent`` header to something else as it is  showing in that response, we can use burp for that .
 it is relfecting in that page so as it is including the file i tried some php code in the user agent field it worked!!
+
 so we can now run system php command to get that password file
 
 ![image](https://user-images.githubusercontent.com/61080375/111745925-50bcb500-88b3-11eb-8fee-bfbb143ab328.png)
