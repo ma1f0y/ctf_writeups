@@ -415,6 +415,74 @@ paylod :http://natas24.natas.labs.overthewire.org/?passwd[]=00000
 
 password **GHF6X7YwACaYYssHVY05cFq83hRktl4c**
 
+level-25
+--------
+
+```php
+ function setLanguage(){
+        /* language setup */
+        if(array_key_exists("lang",$_REQUEST))
+            if(safeinclude("language/" . $_REQUEST["lang"] ))
+                return 1;
+        safeinclude("language/en"); 
+    }
+```
+
+In the web app it is fection the langguage file when we change the language, so we can try path travesal attack
+```php
+function safeinclude($filename){
+        // check for directory traversal
+        if(strstr($filename,"../")){
+            logRequest("Directory traversal attempt! fixing request.");
+            $filename=str_replace("../","",$filename);
+        }
+        // dont let ppl steal our passwords
+        if(strstr($filename,"natas_webpass")){
+            logRequest("Illegal file access detected! Aborting!");
+            exit(-1);
+        }
+        // add more checks...
+
+        if (file_exists($filename)) { 
+            include($filename);
+            return 1;
+        }
+        return 0;
+    }
+ ```
+But form the soure the ``safeinclude()`` dose a check for path-traversal ,like if the lang parameter has ``../`` it will be replace with '',which means it will be removed ,we can bypass this check by using ``..././`` then the replace will make the perfect ``../`` 
+then we can try to access the password page of  natas26,form the previous challenges we know that it is in the ``etc/natas_webpass/natas26`` but ther is also a check  for that if the lang parameter has the word ``natas_webpass`` it will not be processed and the program will exit, so we cannot get to that dir
+
+but when we check the source we can see a logRequest() function
+```php
+function logRequest($message){
+        $log="[". date("d.m.Y H::i:s",time()) ."]";
+        $log=$log . " " . $_SERVER['HTTP_USER_AGENT'];
+        $log=$log . " \"" . $message ."\"\n"; 
+        $fd=fopen("/var/www/natas/natas25/logs/natas25_" . session_id() .".log","a");
+        fwrite($fd,$log);
+        fclose($fd);
+    }
+```
+in this function it is opening the log file  and writing  the log message inside it ,it also include time and ``USER AGENT`` in that file
+so we cat try to acess that file (the the file name is natas25_(OURSESSIONID).log)
+```http://natas25.natas.labs.overthewire.org/?lang=..././logs/natas25_SESSIONID.log```
+
+we will get the response
+![image](https://user-images.githubusercontent.com/61080375/111745412-8ad98700-88b2-11eb-928c-b192e9423363.png)
+
+so here we can acces that file,now we can try changing the ``user-agent`` header to something else as it is  showing in that response,we can use burp for that 
+it is relfecting in that page so as it is including the file i tried some php code in the user agent field it worked!!
+so we can now run system php command to get that password file
+
+![image](https://user-images.githubusercontent.com/61080375/111745925-50bcb500-88b3-11eb-8fee-bfbb143ab328.png)
+ 
+ 
+and we got the password
+
+password:**oGgWAJ7zcGT28vYazGo4rkhOPDhBu34T**
+
+
 	
 	
 	
