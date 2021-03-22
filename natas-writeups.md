@@ -627,7 +627,17 @@ and vist the infor.php in the img dir
 
 password : **55TBjpPZUUJgVP5b3BnbG6ON9uDPVzCJ**
 
+level-27
+---------
 
+
+![image](https://user-images.githubusercontent.com/61080375/112014676-20924200-8b51-11eb-9634-0ac099e08c0e.png)
+
+
+![image](https://user-images.githubusercontent.com/61080375/112014560-05bfcd80-8b51-11eb-9a3d-6dbc1fcf8431.png)
+
+
+password=**JWwR438wkgTsNKBbcJoowyysdM82YjeF**
 	
 	
 	
