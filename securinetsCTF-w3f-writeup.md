@@ -85,7 +85,7 @@ http://web2.q21.ctfsecurinets.com:8081/?%20cmd=eval((((((1/0).(1)){0})%26(((1/0)
 * we can see alot of functions are disabled in that
 
 
-* we found that ``ini_set()``  is not disabled
+* we found that ``ini_set()``  is not disabled,which we can use to change some of the settings in php.ini
 * there is a ``/images`` dir 
 * the flag location is ``/``
 * so we can bypass open_basedir and use finfo to read contents
