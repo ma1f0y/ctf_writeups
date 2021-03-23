@@ -9,7 +9,7 @@ waf-config file
 
 ![image](https://user-images.githubusercontent.com/61080375/112029098-e2038400-8b5e-11eb-97dd-fd1bfacec876.png)
 
-* we can by pass that ``!@within 1`` by putting space("%20" or "+") in fron of the ``cmd`` parameter 
+* we can by pass that ``!@within 1`` by putting space("%20" or "+") in front of the ``cmd`` parameter 
 
 
 http://web2.q21.ctfsecurinets.com:8081/?+cmd=123
