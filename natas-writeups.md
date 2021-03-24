@@ -630,6 +630,51 @@ password : **55TBjpPZUUJgVP5b3BnbG6ON9uDPVzCJ**
 level-27
 ---------
 
+when we  look through the soruce of the page we can see several functions ,when we enter a user name and password it 
+it checks if it is a valid user or not by ``validUser()`` function  and if it retuns true then it check crendtials ,check if the password is is correct for that usrname , and if the that check is passed then it will dump data from the database which is our username and password.
+every function in that source fetches data form the database ,but the mysql_real_escape_string is passed on to the variables we pass so there is less possibility of SQLI
+
+```php
+function dumpData($link,$usr){
+    
+    $user=mysql_real_escape_string($usr);
+    
+    $query = "SELECT * from users where username='$user'";
+    $res = mysql_query($query, $link);
+    if($res) {
+        if(mysql_num_rows($res) > 0) {
+            while ($row = mysql_fetch_assoc($res)) {
+                // thanks to Gobo for reporting this bug!  
+                //return print_r($row);
+                return print_r($row,true);
+            }
+        }
+    }
+    return False;
+} 
+```
+
+
+when looking through the ``dumpData()`` function  we can see that  it is taking the data form the database where username is eqal to the username we entered 
+and checks if the number of rows of the result of that query is greater that zero ,and the in that while loop it is printing each row of the result
+
+we want to get the password of natas28 
+
+as the dumData() will return all the data of a user which has that username ,we can try to create user with the username ``natas28`` ,but it is not that easy
+
+as it check for the username already exists or not,we want to bypass that check 
+
+in mysql when we insert something into the database ,if the lenght value given is greater than the limit of that value,it will add the give value only up that specified lenght
+so here the sqlquer to create the database was also given
+```sql
+CREATE TABLE `users` (
+  `username` varchar(64) DEFAULT NULL,
+  `password` varchar(64) DEFAULT NULL
+); 
+```
+here we can see that max length that would we add is 64 ,so we want to bypass the validuser check and want to insert a user with the name ``natas28``
+so we can add spaces up to the mas lenght and add any char after that so that will by pass the vlaiduser check and only the sql will only insertthe max lenght
+
 
 ![image](https://user-images.githubusercontent.com/61080375/112014676-20924200-8b51-11eb-9634-0ac099e08c0e.png)
 
